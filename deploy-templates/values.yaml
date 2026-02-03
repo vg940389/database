@@ -1,6 +1,6 @@
 pgadmin4:
   ingress:
-    enabled: true
+    enabled: false
     hosts:
       - host: pgadmin.example.com
         paths:
