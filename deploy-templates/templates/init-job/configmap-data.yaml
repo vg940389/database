@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: messages-testdata
+data:
+  messages.sql: |
+    CREATE TABLE IF NOT EXISTS messages (
+      id SERIAL PRIMARY KEY,
+      author TEXT NOT NULL,
+      message TEXT NOT NULL,
+      note TEXT
+    );
+
+    INSERT INTO messages (author, message, note) VALUES
+      ('Alice Johnson', 'Welcome to our new database system!', 'Initial setup record')
+      ON CONFLICT DO NOTHING;
+
+    INSERT INTO messages (author, message, note) VALUES
+      ('Bob Smith', 'Database migration completed successfully', 'Migration note')
+      ON CONFLICT DO NOTHING;
+
+    INSERT INTO messages (author, message, note) VALUES
+      ('Carol Williams', 'Testing data persistence and reliability', 'QA test entry')
+      ON CONFLICT DO NOTHING;
+
+    INSERT INTO messages (author, message, note) VALUES
+      ('David Brown', 'Performance benchmark entry', 'Load testing')
+      ON CONFLICT DO NOTHING;
+
+    INSERT INTO messages (author, message, note) VALUES
+      ('Emma Davis', 'Security audit checkpoint', 'Security review')
+      ON CONFLICT DO NOTHING;
+
+    INSERT INTO messages (author, message, note) VALUES
+      ('Frank Miller', 'Backup and recovery test entry', 'DR test')
+      ON CONFLICT DO NOTHING;
+
+    INSERT INTO messages (author, message, note) VALUES
+      ('Grace Wilson', 'Multi-region sync verification', 'Replication test')
+      ON CONFLICT DO NOTHING;
+
+    INSERT INTO messages (author, message, note) VALUES
+      ('Henry Moore', 'API endpoint validation record', 'Integration test')
+      ON CONFLICT DO NOTHING;
+
+    INSERT INTO messages (author, message, note) VALUES
+      ('Ivy Taylor', 'Schema versioning checkpoint', 'Version control')
+      ON CONFLICT DO NOTHING;
+
+    INSERT INTO messages (author, message, note) VALUES
+      ('Jack Anderson', 'Production readiness verification', 'Go-live checkpoint')
+      ON CONFLICT DO NOTHING;
