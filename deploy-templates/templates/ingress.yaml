@@ -1,0 +1,19 @@
+{{- if .Values.pgadmin4.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: database-pgadmin4
+  namespace: {{ .Release.Namespace }}
+spec:
+  rules:
+    - host: {{ .Values.pgadmin4.ingress.hosts | first | get "host" }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: database-pgadmin4
+                port:
+                  number: 80
+{{- end }}
