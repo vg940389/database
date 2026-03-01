@@ -6,9 +6,9 @@ spec:
   template:
     spec:
       restartPolicy: OnFailure
-      containers:
+      initContainers:
       - name: wait-for-db
-        image: postgres:13
+        image: postgres:15
         command:
         - sh
         - -c
@@ -35,3 +35,52 @@ spec:
               secretKeyRef:
                 name: application-pguser-admin
                 key: user
+      containers:
+        - name: init-data
+          image: postgres:15
+          command:
+            - sh
+            - -c
+            - |
+              echo "Starting database initialization..."
+              PGPASSWORD=$POSTGRES_PASSWORD psql \
+                -h $POSTGRES_HOST \
+                -p $POSTGRES_PORT \
+                -U $POSTGRES_USER \
+                -d $POSTGRES_NAME \
+                -f /scripts/init.sql
+              echo "Database initialization completed successfully!"
+          env:
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: application-pguser-admin
+                  key: host
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: application-pguser-admin
+                  key: port
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: application-pguser-admin
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: application-pguser-admin
+                  key: password
+            - name: POSTGRES_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: application-pguser-admin
+                  key: dbname
+          volumeMounts:
+            - name: sql-script
+              mountPath: /scripts
+      volumes:
+        - name: sql-script
+          configMap:
+            name: db-init-script
+      
