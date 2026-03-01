@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   rules:
-    - host: {{ .Values.pgadmin4.ingress.hosts | first | get "host" }}
+    - host: {{ get (first .Values.pgadmin4.ingress.hosts) "host" }}
       http:
         paths:
           - path: /
